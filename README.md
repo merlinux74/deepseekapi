@@ -3,16 +3,19 @@
 ![Dart](https://img.shields.io/badge/language-Dart-0175C2?style=flat-square)
 ![Flutter](https://img.shields.io/badge/Flutter-3.22+-02569B?style=flat-square&logo=flutter)
 ![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Windows%20%7C%20Linux%20%7C%20Android%20%7C%20iOS-lightgrey?style=flat-square)
+![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)
 
-Un'applicazione Flutter che mostra in **tempo reale** se le API di DeepSeek sono in fascia **Off-Peak** (sconto 50%) o **Peak** (tariffa piena), utilizzando il fuso orario italiano (Europe/Rome) e gestendo automaticamente ora legale e solare.
+> **Monitor in tempo reale per le fasce orarie scontate delle API DeepSeek.**
+
+Un'applicazione Flutter che mostra istantaneamente se le API di DeepSeek sono in fascia **Off-Peak** (sconto 50%) o **Peak** (tariffa piena), utilizzando il fuso orario italiano (Europe/Rome) con gestione automatica di ora legale e solare.
 
 ---
 
-## 📖 A cosa serve
+## 📖 Perché questo progetto
 
-DeepSeek applica tariffe scontate del 50% in determinati orari e giorni della settimana. Questo strumento ti permette di **verificare istantaneamente** se in questo momento puoi usufruire dello sconto, senza dover calcolare manualmente le fasce orarie.
+DeepSeek offre tariffe scontate del 50% in determinati orari e giorni della settimana. Questo strumento ti permette di **verificare con un colpo d'occhio** se in questo momento puoi risparmiare, senza dover fare calcoli manuali.
 
-**Utile per:**
+**Ideale per:**
 - Sviluppatori che integrano le API DeepSeek e vogliono ottimizzare i costi.
 - Team che pianificano batch di richieste nelle fasce più convenienti.
 - Chiunque voglia monitorare il costo delle chiamate API in tempo reale.
@@ -35,9 +38,11 @@ DeepSeek applica tariffe scontate del 50% in determinati orari e giorni della se
 
 ## 📱 Screenshot
 
+> *Aggiungi qui gli screenshot della tua app. Puoi farli dopo aver eseguito l'applicazione.*
+
 | Stato Off-Peak (verde) | Stato Peak (rosso) |
 |------------------------|--------------------|
-| *<inserisci qui uno screenshot dell'app in verde>* | *<inserisci qui uno screenshot dell'app in rosso>* |
+| ![Off-Peak](screenshots/off-peak.png) | ![Peak](screenshots/peak.png) |
 
 ---
 
@@ -55,21 +60,27 @@ DeepSeek applica tariffe scontate del 50% in determinati orari e giorni della se
 ### Prerequisiti
 
 - Flutter SDK (versione 3.22 o superiore)
-- Android Studio / Xcode / Visual Studio Code (a seconda della piattaforma)
-- Un emulatore o dispositivo fisico
+- Un editor (Android Studio, VS Code, Xcode)
+- Un emulatore o dispositivo fisico per la piattaforma desiderata
 
-### Installazione
+### Installazione e avvio
 
 ```bash
 # 1. Clona il repository
-git clone https://github.com/tuo-username/deepseek-api-status.git
-cd deepseek-api-status
+git clone https://github.com/merlinux74/deepseekapi.git
+cd deepseekapi
 
 # 2. Scarica le dipendenze
 flutter pub get
 
-# 3. Esegui l'app
+# 3. Esegui l'app (scegli la piattaforma)
 flutter run
 
 # Per avviarlo su una piattaforma specifica (es. macOS):
 flutter run -d macos
+
+# Su Windows:
+flutter run -d windows
+
+# Su Android:
+flutter run -d android
