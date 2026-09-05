@@ -1,0 +1,16 @@
+# GitHub's Linguist picks the project language by counting code lines.
+# A Flutter project auto-generates native "platform" scaffolding
+# (windows/, linux/, ios/, macos/, android/) full of C/C++/Swift code.
+# That generated code is often bigger than the actual Dart codebase, so
+# GitHub mis-labels such repos as C++/Kotlin/etc.
+
+# 1) Treat generated native platform folders as vendored code: they are
+#    excluded from GitHub's language statistics entirely.
+windows/** linguist-vendored
+linux/** linguist-vendored
+macos/** linguist-vendored
+ios/** linguist-vendored
+android/** linguist-vendored
+
+# 2) Explicitly label the real source of our app as Dart.
+*.dart linguist-language=Dart
