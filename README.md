@@ -1,19 +1,25 @@
-# 🚀 DeepSeek API Status Monitor
+# 🚀 DeepSeek API Pricing Monitor
 
 ![Dart](https://img.shields.io/badge/language-Dart-0175C2?style=flat-square)
 ![Flutter](https://img.shields.io/badge/Flutter-3.22+-02569B?style=flat-square&logo=flutter)
 ![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Windows%20%7C%20Linux%20%7C%20Android%20%7C%20iOS-lightgrey?style=flat-square)
 ![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)
 
-> **Monitor in tempo reale per le fasce orarie scontate delle API DeepSeek.**
+> **Monitor in tempo reale delle fasce tariffarie delle API DeepSeek.**
 
-Un'applicazione Flutter che mostra istantaneamente se le API di DeepSeek sono in fascia **Off-Peak** (sconto 50%) o **Peak** (tariffa piena), utilizzando il fuso orario italiano (Europe/Rome) con gestione automatica di ora legale e solare.
+Un'applicazione Flutter che mostra istantaneamente se le API di DeepSeek sono in fascia
+**Off-Peak** (sconto 50%) o **Peak** (tariffa piena), con la tabella prezzi aggiornata.
+Le fasce sono calcolate in **UTC** (come da specifica DeepSeek) e mostrate anche
+convertite nel fuso orario italiano (Europe/Rome), con gestione automatica di
+ora legale e solare.
 
 ---
 
 ## 📖 Perché questo progetto
 
-DeepSeek offre tariffe scontate del 50% in determinati orari e giorni della settimana. Questo strumento ti permette di **verificare con un colpo d'occhio** se in questo momento puoi risparmiare, senza dover fare calcoli manuali.
+DeepSeek offre tariffe scontate del 50% in determinati orari e giorni della settimana.
+Questo strumento ti permette di **verificare con un colpo d'occhio** se in questo
+momento puoi risparmiare, senza dover fare calcoli manuali.
 
 **Ideale per:**
 - Sviluppatori che integrano le API DeepSeek e vogliono ottimizzare i costi.
@@ -27,12 +33,40 @@ DeepSeek offre tariffe scontate del 50% in determinati orari e giorni della sett
 - **🟢 Indicatore visivo in tempo reale**:
   - Verde = sconto 50% attivo (Off-Peak)
   - Rosso = tariffa piena (Peak)
+- **💵 Tabella prezzi** per `deepseek-flash` e `deepseek-v4-pro`, con evidenza
+  della tariffa attualmente applicata.
+- **⏳ Countdown** al prossimo cambio di tariffa.
 - **⏰ Aggiornamento automatico ogni secondo**.
 - **📅 Rilevazione automatica**:
   - Weekend (sabato e domenica): sconto 50% 24 ore su 24.
-  - Feriali (lunedì-venerdì): fascia Peak dalle 03:00 alle 06:00 e dalle 08:00 alle 12:00 (ora italiana), il resto è Off-Peak.
-- **🌍 Fuso orario corretto**: utilizza il database IANA `Europe/Rome` con gestione automatica di ora legale/solare.
-- **🎨 Interfaccia chiara e moderna** con tema scuro, progettata per un'esperienza utente intuitiva.
+  - Festività pubbliche cinesi: sconto 50% tutto il giorno.
+  - Feriali: fascia Peak `01:00–04:00` e `06:00–10:00` **UTC**.
+- **🌍 Fuso orario corretto**: calcolo sempre in UTC, visualizzazione in
+  `Europe/Rome` con gestione automatica di ora legale/solare, più orologio UTC.
+- **🎨 Interfaccia chiara e moderna** con tema scuro, pensata per un monitor full-screen.
+
+---
+
+## 📊 Dati di riferimento
+
+Fonte: <https://api-docs.deepseek.com/quick_start/pricing/>
+
+- **Peak**: `01:00–04:00` e `06:00–10:00` **UTC**, dal lunedì al venerdì.
+- **Off-peak**: tutte le altre ore, weekend interi e festività pubbliche cinesi.
+- Le tariffe off-peak sono esattamente la metà di quelle peak.
+- I prezzi sono in **USD per 1M token**.
+
+> ⚠️ **Nota importante**: le fasce Peak sono definite in **UTC**, non in ora locale.
+> In Italia diventano `02:00–05:00` e `07:00–11:00` con l'ora solare (CET) e
+> `03:00–06:00` e `08:00–12:00` con l'ora legale (CEST). L'app calcola sempre in UTC
+> e mostra la conversione locale corrente, così resta corretta tutto l'anno.
+
+### Modelli e prezzi (USD / 1M token)
+
+| Modello | Input cache hit (off/peak) | Input cache miss (off/peak) | Output (off/peak) |
+|---|---|---|---|
+| `deepseek-flash` (V4.1-Flash-1017) | $0.003 / $0.006 | $0.15 / $0.30 | $0.60 / $1.20 |
+| `deepseek-v4-pro` (V4-Pro-0813) | $0.022 / $0.044 | $0.66 / $1.32 | $1.98 / $3.96 |
 
 ---
 
@@ -84,3 +118,25 @@ flutter run -d windows
 
 # Su Android:
 flutter run -d android
+```
+
+---
+
+## 🔧 Manutenzione
+
+I dati tariffari sono in `lib/main.dart`:
+
+- **Festività cinesi**: `_chinesePublicHolidays`. Va esteso quando vengono
+  pubblicati i calendari dei nuovi anni.
+- **Prezzi**: costante `_models`.
+- **Fasce Peak**: costante `_peakRangesUtc` (sempre espresse in UTC).
+
+## 🧪 Test
+
+```bash
+flutter test
+```
+
+## 📄 Licenza
+
+Distribuito sotto licenza MIT.
